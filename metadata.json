@@ -1,0 +1,6 @@
+{
+  "name": "Dojech Solar Tech",
+  "description": "Premium solar energy marketplace for solar panels, inverters, lithium batteries, and complete power systems with seamless WhatsApp ordering.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

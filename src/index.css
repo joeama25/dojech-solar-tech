@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --ink: #0B0C10;         /* Very dark, almost black */
+  --forest: #121A16;      /* Deeper dark green */
+  --copper: #D48A4F;      /* Brighter, more striking copper */
+  --terracotta: #E05E3D;  /* Vibrant red-orange */
+  --sun: #FFB703;         /* Bright neon-ish yellow */
+  --teal: #2A5A63;        
+  --paper: #F7F7F7;       /* Crisp off-white */
+  --sage: #666666;        /* Clean gray */
+  --line: #E5E5E5;        /* Subtle dividers */
+}
+
+html, body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background-color: var(--paper);
+  /* PREVENT HORIZONTAL SCROLL */
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hide scrollbar on mobile for a native app feel */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Slim scrollbar for desktop */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D1CBBE; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--sage); }
+
+/* Ensure all interactive elements show a pointer cursor */
+button, 
+a, 
+select, 
+input[type="submit"], 
+input[type="button"],
+[role="button"] {
+  cursor: pointer;
+}
+
+/* Prevent pointer on disabled buttons */
+button:disabled,
+input:disabled {
+  cursor: not-allowed;
+}
