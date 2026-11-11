@@ -876,7 +876,7 @@ export const AdminDashboard: React.FC<{ onNavigate?: (view: string) => void }> =
                   <h1 className="text-xl sm:text-2xl font-semibold text-[#0B192C] tracking-tight">Product Inventory</h1>
                   <p className="text-xs sm:text-sm text-slate-500 mt-1">Manage your store's catalog</p>
                 </div>
-                <button onClick={() => setEditingProduct({ name: '', price: 250000, categoryId: categories[0]?.id || 'cat-panels', brand: 'Dojech', description: '', inStock: true, stockQuantity: 10, specs: {}, images: ['/src/assets/images/cat_solar_panels_1793813620282.jpg'] })} className="w-full sm:w-auto px-6 py-2.5 bg-[#0B192C] text-white text-sm font-medium rounded-full hover:bg-black transition-colors flex items-center justify-center gap-2 shadow-sm"><Plus className="w-4 h-4" /> Add Product</button>
+                <button onClick={() => setEditingProduct({ name: '', price: 250000, categoryId: categories[0]?.id || 'cat-panels', brand: 'Dojech', description: '', inStock: true, stockQuantity: 10, specs: {}, images: ['/images/cat_solar_panels_1793813620282.jpg'] })} className="w-full sm:w-auto px-6 py-2.5 bg-[#0B192C] text-white text-sm font-medium rounded-full hover:bg-black transition-colors flex items-center justify-center gap-2 shadow-sm"><Plus className="w-4 h-4" /> Add Product</button>
               </div>
 
               <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
@@ -922,7 +922,7 @@ export const AdminDashboard: React.FC<{ onNavigate?: (view: string) => void }> =
                   <h1 className="text-xl sm:text-2xl font-semibold text-[#0B192C] tracking-tight">Hero Slides</h1>
                   <p className="text-xs sm:text-sm text-slate-500 mt-1">Manage homepage banners and promotions.</p>
                 </div>
-                <button onClick={() => setEditingSlide({ heading: 'Smart Solar for Every Nigerian Home', description: 'Dependable solar power backup engineered to withstand tough grid conditions.', ctaText: 'Explore', ctaLink: 'shop', image: '/src/assets/images/hero_solar_residential_1793813490504.jpg', order: heroSlides.length + 1, isActive: true, accentBadge: 'Clean Energy' })} className="w-full sm:w-auto px-6 py-2.5 bg-[#0B192C] text-white text-sm font-medium rounded-full hover:bg-black transition-colors flex items-center justify-center gap-2 shadow-sm"><Plus className="w-4 h-4" /> Add Slide</button>
+                <button onClick={() => setEditingSlide({ heading: 'Smart Solar for Every Nigerian Home', description: 'Dependable solar power backup engineered to withstand tough grid conditions.', ctaText: 'Explore', ctaLink: 'shop', image: '/images/hero_solar_residential_1793813490504.jpg', order: heroSlides.length + 1, isActive: true, accentBadge: 'Clean Energy' })} className="w-full sm:w-auto px-6 py-2.5 bg-[#0B192C] text-white text-sm font-medium rounded-full hover:bg-black transition-colors flex items-center justify-center gap-2 shadow-sm"><Plus className="w-4 h-4" /> Add Slide</button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
@@ -953,7 +953,7 @@ export const AdminDashboard: React.FC<{ onNavigate?: (view: string) => void }> =
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <h1 className="text-xl sm:text-2xl font-semibold text-[#0B192C] tracking-tight">Categories</h1>
-                <button onClick={() => setEditingCategory({ name: '', slug: '', description: '', image: '/src/assets/images/cat_solar_panels_1793813620282.jpg' })} className="w-full sm:w-auto px-6 py-2.5 bg-[#0B192C] text-white text-sm font-medium rounded-full hover:bg-black transition-colors flex items-center justify-center gap-2 shadow-sm"><Plus className="w-4 h-4" /> Add Category</button>
+                <button onClick={() => setEditingCategory({ name: '', slug: '', description: '', image: '/images/cat_solar_panels_1793813620282.jpg' })} className="w-full sm:w-auto px-6 py-2.5 bg-[#0B192C] text-white text-sm font-medium rounded-full hover:bg-black transition-colors flex items-center justify-center gap-2 shadow-sm"><Plus className="w-4 h-4" /> Add Category</button>
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">

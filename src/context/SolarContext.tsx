@@ -298,7 +298,7 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       originalPrice: productData.originalPrice ? Number(productData.originalPrice) : undefined,
       description: productData.description || '',
       shortDescription: productData.shortDescription || '',
-      images: productData.images && productData.images.length > 0 ? productData.images : ['/src/assets/images/cat_solar_panels_1793813620282.jpg'],
+      images: productData.images && productData.images.length > 0 ? productData.images : ['/images/cat_solar_panels_1793813620282.jpg'],
       inStock: productData.inStock ?? true,
       stockQuantity: Number(productData.stockQuantity) || 10,
       isFeatured: !!productData.isFeatured,
@@ -327,7 +327,7 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const id = catData.id || `cat_${Date.now()}`;
     const fullCat: Category = {
       id, name: catData.name || 'Category', slug: catData.slug || (catData.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      description: catData.description || '', image: catData.image || '/src/assets/images/cat_solar_panels_1793813620282.jpg',
+      description: catData.description || '', image: catData.image || '/images/cat_solar_panels_1793813620282.jpg',
       productCount: products.filter(p => p.categoryId === id).length
     };
     setCategories(prev => {
@@ -348,7 +348,7 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const fullSlide: HeroSlide = {
       id, heading: slideData.heading || 'Reliable Solar Energy', description: slideData.description || '',
       ctaText: slideData.ctaText || 'Shop Now', ctaLink: slideData.ctaLink || 'shop',
-      image: slideData.image || '/src/assets/images/hero_solar_residential_1793813490504.jpg',
+      image: slideData.image || '/images/hero_solar_residential_1793813490504.jpg',
       order: slideData.order || heroSlides.length + 1, isActive: slideData.isActive ?? true, accentBadge: slideData.accentBadge || 'Solar Technology'
     };
     setHeroSlides(prev => {

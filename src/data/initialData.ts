@@ -30,7 +30,7 @@ export const INITIAL_HERO_SLIDES: HeroSlide[] = [
     description: 'Discover reliable solar energy solutions designed to keep your home and business powered 24/7 without noisy generators or grid failures.',
     ctaText: 'Explore Products',
     ctaLink: 'shop',
-    image: '/src/assets/images/hero_solar_residential_1793813490504.jpg',
+    image: '/images/hero_solar_residential_1793813490504.jpg',
     order: 1,
     isActive: true,
     accentBadge: 'High-Efficiency Monocrystalline & Hybrid Inverters'
@@ -41,7 +41,7 @@ export const INITIAL_HERO_SLIDES: HeroSlide[] = [
     description: 'Take control of your electricity with dependable Tier-1 solar panels, smart pure sine wave inverters, and long-life LiFePO4 batteries.',
     ctaText: 'Shop Solar Solutions',
     ctaLink: 'shop',
-    image: '/src/assets/images/hero_commercial_inverter_1793813489777.jpg',
+    image: '/images/hero_commercial_inverter_1793813489777.jpg',
     order: 2,
     isActive: true,
     accentBadge: 'Enterprise & Residential Energy Storage'
@@ -52,7 +52,7 @@ export const INITIAL_HERO_SLIDES: HeroSlide[] = [
     description: 'Enjoy cleaner, smarter, and more affordable energy with Dojech Solar Tech backed by certified warranties and nationwide Nigerian delivery.',
     ctaText: 'Discover More',
     ctaLink: 'categories',
-    image: '/src/assets/images/hero_solar_farm_1793813489573.jpg',
+    image: '/images/hero_solar_farm_1793813489573.jpg',
     order: 3,
     isActive: true,
     accentBadge: 'Up to 25 Years Linear Performance Warranty'
@@ -65,7 +65,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: 'Solar Panels',
     slug: 'solar-panels',
     description: 'Tier-1 Mono PERC & N-Type bifacial solar panels with up to 22.8% cell efficiency.',
-    image: '/src/assets/images/cat_solar_panels_1793813620282.jpg',
+    image: '/images/cat_solar_panels_1793813620282.jpg',
     productCount: 8
   },
   {
@@ -73,7 +73,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: 'Solar Inverters',
     slug: 'solar-inverters',
     description: 'Pure sine wave hybrid, off-grid and on-grid inverters with built-in MPPT controllers.',
-    image: '/src/assets/images/cat_inverters_1793813620635.jpg',
+    image: '/images/cat_inverters_1793813620635.jpg',
     productCount: 12
   },
   {
@@ -81,7 +81,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: 'Lithium Batteries',
     slug: 'lithium-batteries',
     description: 'High-density LiFePO4 rack-mount and wall-mount batteries offering 6,000+ cycle lifespans.',
-    image: '/src/assets/images/cat_lithium_batteries_1793813621883.jpg',
+    image: '/images/cat_lithium_batteries_1793813621883.jpg',
     productCount: 9
   },
   {
@@ -89,7 +89,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: 'Tubular Batteries',
     slug: 'tubular-batteries',
     description: 'Rugged deep-cycle tall tubular lead-acid batteries built for frequent deep discharges.',
-    image: '/src/assets/images/cat_lithium_batteries_1793813621883.jpg',
+    image: '/images/cat_lithium_batteries_1793813621883.jpg',
     productCount: 5
   },
   {
@@ -97,7 +97,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: 'Charge Controllers',
     slug: 'charge-controllers',
     description: 'Smart MPPT solar charge controllers with 99% tracking efficiency for maximum harvesting.',
-    image: '/src/assets/images/cat_inverters_1793813620635.jpg',
+    image: '/images/cat_inverters_1793813620635.jpg',
     productCount: 6
   },
   {
@@ -105,7 +105,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: 'Complete Solar Systems',
     slug: 'complete-solar-systems',
     description: 'Turnkey pre-configured solar packages tailored for 2-bedroom flats, duplexes, and commercial buildings.',
-    image: '/src/assets/images/hero_solar_residential_1793813490504.jpg',
+    image: '/images/hero_solar_residential_1793813490504.jpg',
     productCount: 7
   },
   {
@@ -113,7 +113,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: 'Solar Accessories',
     slug: 'solar-accessories',
     description: 'PV solar cables, MC4 connectors, DC surge protectors, circuit breakers, and battery racks.',
-    image: '/src/assets/images/cat_solar_panels_1793813620282.jpg',
+    image: '/images/cat_solar_panels_1793813620282.jpg',
     productCount: 15
   },
   {
@@ -121,7 +121,7 @@ export const INITIAL_CATEGORIES: Category[] = [
     name: 'Installation Equipment',
     slug: 'installation-equipment',
     description: 'Roof mounting aluminum rails, clamps, grounding lugs, and weather-sealed combiner boxes.',
-    image: '/src/assets/images/hero_solar_farm_1793813489573.jpg',
+    image: '/images/hero_solar_farm_1793813489573.jpg',
     productCount: 10
   }
 ];
@@ -139,8 +139,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'The Canadian Solar 550W HiKu6 Monocrystalline module delivers high power output and up to 21.5% module efficiency. Built with half-cut cell technology to minimize micro-cracks and reduce shading loss. Ideal for Nigerian residential rooftops and commercial solar farms.',
     shortDescription: '550W high-efficiency Mono PERC module with 144 half-cut cells and 25-year warranty.',
     images: [
-      '/src/assets/images/cat_solar_panels_1793813620282.jpg',
-      '/src/assets/images/hero_solar_farm_1793813489573.jpg'
+      '/images/cat_solar_panels_1793813620282.jpg',
+      '/images/hero_solar_farm_1793813489573.jpg'
     ],
     inStock: true,
     stockQuantity: 42,
@@ -173,8 +173,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'High-performance pure sine wave 5KVA 48V hybrid inverter engineered for continuous household and office power. Features an integrated 120A MPPT solar charge controller with high PV input voltage up to 500VDC. Supports seamless dual output for essential and non-essential loads.',
     shortDescription: '5KVA 48V Pure Sine Wave Hybrid Inverter with 120A MPPT Controller and LCD screen.',
     images: [
-      '/src/assets/images/cat_inverters_1793813620635.jpg',
-      '/src/assets/images/hero_commercial_inverter_1793813489777.jpg'
+      '/images/cat_inverters_1793813620635.jpg',
+      '/images/hero_commercial_inverter_1793813489777.jpg'
     ],
     inStock: true,
     stockQuantity: 18,
@@ -207,8 +207,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Premium A-grade prismatic LiFePO4 chemistry with over 6,000 cycles at 80% DOD. Smart built-in Battery Management System (BMS) with CAN/RS485 protocol communication for Victron, Deye, Felicity, and Growatt inverters. Sleek wall-mountable design saves floor space.',
     shortDescription: '5.12kWh 51.2V 100Ah Lithium Iron Phosphate battery pack with 6000+ cycle life.',
     images: [
-      '/src/assets/images/cat_lithium_batteries_1793813621883.jpg',
-      '/src/assets/images/hero_commercial_inverter_1793813489777.jpg'
+      '/images/cat_lithium_batteries_1793813621883.jpg',
+      '/images/hero_commercial_inverter_1793813489777.jpg'
     ],
     inStock: true,
     stockQuantity: 14,
@@ -240,8 +240,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'The benchmark of smart solar inverters. Deye 8kW hybrid inverter allows multi-parallel connection (up to 16 units), dual MPPT trackers, touch LCD screen, generator auto-start relay, and smart load management. Supports zero-export grid connection.',
     shortDescription: '8kW Hybrid Inverter with Dual MPPT, Touch Color Screen, and Generator control.',
     images: [
-      '/src/assets/images/cat_inverters_1793813620635.jpg',
-      '/src/assets/images/hero_commercial_inverter_1793813489777.jpg'
+      '/images/cat_inverters_1793813620635.jpg',
+      '/images/hero_commercial_inverter_1793813489777.jpg'
     ],
     inStock: true,
     stockQuantity: 9,
@@ -274,8 +274,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Next-generation TOPCon N-type solar technology with bifacial energy yield up to 25% from rear reflection. Ultra-low degradation (1% first year, 0.4% annual), superior low-light performance in cloudy Nigerian conditions, and dual tempered glass construction.',
     shortDescription: '585W N-Type TOPCon bifacial dual-glass module with 22.65% module efficiency.',
     images: [
-      '/src/assets/images/cat_solar_panels_1793813620282.jpg',
-      '/src/assets/images/hero_solar_farm_1793813489573.jpg'
+      '/images/cat_solar_panels_1793813620282.jpg',
+      '/images/hero_solar_farm_1793813489573.jpg'
     ],
     inStock: true,
     stockQuantity: 36,
@@ -307,7 +307,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Heavy-duty tubular plate technology formulated with high antimony lead alloy to withstand tough Nigerian climate and frequent NEPA power outages. High acid volume per ampere-hour ensures low maintenance and reliable backup.',
     shortDescription: '220Ah 12V Heavy Duty Deep Cycle Tall Tubular Inverter Battery.',
     images: [
-      '/src/assets/images/cat_lithium_batteries_1793813621883.jpg'
+      '/images/cat_lithium_batteries_1793813621883.jpg'
     ],
     inStock: true,
     stockQuantity: 25,
@@ -338,8 +338,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'All-inclusive pre-engineered solar package designed to power a 3-bedroom home: refrigerator, TV, decoders, lighting points, fans, laptops, and sound system 24/7. Includes 3.5KVA Hybrid Inverter, 5kWh LiFePO4 Lithium Battery, 6x 550W Canadian Solar Panels, mounting rails, DC breakers, surge protectors, and installation cables.',
     shortDescription: 'Complete 3.5KVA Solar System: Inverter, 5kWh Lithium Battery, 6x Panels, Protection kits.',
     images: [
-      '/src/assets/images/hero_solar_residential_1793813490504.jpg',
-      '/src/assets/images/hero_commercial_inverter_1793813489777.jpg'
+      '/images/hero_solar_residential_1793813490504.jpg',
+      '/images/hero_commercial_inverter_1793813489777.jpg'
     ],
     inStock: true,
     stockQuantity: 10,
@@ -369,7 +369,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Advanced MPPT tracking algorithm with efficiency >= 99.5%. Multi-voltage auto recognition for 12V/24V/36V/48V systems. Max PV input 150VDC. Features comprehensive protections against overcharging, reverse polarity, and short circuits.',
     shortDescription: '60A MPPT Solar Charge Controller with LCD display and 150V PV input.',
     images: [
-      '/src/assets/images/cat_inverters_1793813620635.jpg'
+      '/images/cat_inverters_1793813620635.jpg'
     ],
     inStock: true,
     stockQuantity: 30,

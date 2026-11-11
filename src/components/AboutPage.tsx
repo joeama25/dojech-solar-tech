@@ -31,7 +31,7 @@ export const AboutPage: React.FC = () => {
             whileInView={{ scale: 1 }} 
             viewport={{ once: true }} 
             transition={{ duration: 2, ease: "easeOut" }} // Slower image zoom
-            src="/src/assets/images/hero_solar_farm_1793813489573.jpg" 
+            src="/images/hero_solar_farm_1793813489573.jpg" 
             className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink)]/80 to-transparent" />
