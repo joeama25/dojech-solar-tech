@@ -49,14 +49,15 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onOpenC
             {currentView !== 'home' ? (
               <button 
                 onClick={handleBack}
-                className={`group p-2 -ml-2 rounded-full transition-colors ${
+                className={`group flex items-center gap-2 pl-3 pr-4 py-2 rounded-full border transition-all duration-300 ${
                   isSolid 
-                    ? 'text-[var(--sage)] hover:text-[var(--ink)] hover:bg-[var(--paper)]' 
-                    : 'text-white/80 hover:text-white hover:bg-white/10'
+                    ? 'text-[var(--sage)] border-[var(--line)] hover:text-[var(--ink)] hover:border-[var(--ink)] hover:bg-[var(--paper)]' 
+                    : 'text-white/80 border-white/20 hover:text-white hover:border-white hover:bg-white/10'
                 }`}
                 aria-label="Go back"
               >
-                <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:-translate-x-1" strokeWidth={2} />
+                <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" strokeWidth={2} />
+                <span className="text-[11px] font-bold uppercase tracking-wider"></span>
               </button>
             ) : (
               <button onClick={() => { onNavigate('home'); setMobileMenuOpen(false); }} className="flex items-center gap-2 group focus:outline-none">
