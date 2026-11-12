@@ -1,11 +1,15 @@
 import React from 'react';
 import { ShieldCheck, Award, Zap, ArrowRight } from 'lucide-react';
-import { useSolar } from '../context/SolarContext';
 import { motion } from 'motion/react';
 
-export const AboutPage: React.FC = () => {
-  const { onNavigate } = useSolar() as any; 
+// 1. Define the props interface
+interface AboutPageProps {
+  onNavigate: (view: string) => void;
+}
 
+// 2. Accept onNavigate as a prop here
+export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
+  
   return (
     <div className="bg-[var(--paper)] min-h-screen overflow-hidden">
       
@@ -14,7 +18,7 @@ export const AboutPage: React.FC = () => {
         <motion.div 
           initial={{ opacity: 0, y: 30 }} 
           animate={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 1.2, ease: "easeOut" }} // Slowed down to 1.2s
+          transition={{ duration: 1.2, ease: "easeOut" }} 
         >
           <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--terracotta)] block mb-3 sm:mb-6">Our Mission</span>
           <h1 className="text-[2.5rem] leading-[1] sm:text-8xl lg:text-[120px] font-black uppercase tracking-tighter text-[var(--ink)] sm:leading-[0.85] max-w-5xl">
@@ -30,7 +34,7 @@ export const AboutPage: React.FC = () => {
             initial={{ scale: 1.1 }} 
             whileInView={{ scale: 1 }} 
             viewport={{ once: true }} 
-            transition={{ duration: 2, ease: "easeOut" }} // Slower image zoom
+            transition={{ duration: 2, ease: "easeOut" }} 
             src="/images/hero_solar_farm_1793813489573.jpg" 
             className="w-full h-full object-cover object-center"
           />
@@ -42,7 +46,7 @@ export const AboutPage: React.FC = () => {
           initial={{ opacity: 0, y: 40 }} 
           whileInView={{ opacity: 1, y: 0 }} 
           viewport={{ once: true }} 
-          transition={{ delay: 0.4, duration: 1, ease: "easeOut" }} // Added explicit 1s duration and longer delay
+          transition={{ delay: 0.4, duration: 1, ease: "easeOut" }} 
           className="relative -mt-20 ml-auto mr-0 w-[75%] max-w-[300px] sm:absolute sm:-bottom-12 sm:right-12 lg:right-24 sm:mx-0 sm:w-full sm:max-w-lg bg-[var(--sun)] p-5 sm:p-10 rounded-2xl shadow-xl"
         >
           <h2 className="text-base sm:text-3xl font-bold text-[var(--ink)] leading-tight mb-2 sm:mb-4">
@@ -51,7 +55,12 @@ export const AboutPage: React.FC = () => {
           <p className="text-[11px] sm:text-sm text-[var(--ink)]/80 leading-relaxed mb-4 sm:mb-6">
             Dojech Solar Tech serves homes, clinics, schools, and commercial enterprises, providing them with the tools to achieve complete energy independence.
           </p>
-          <button onClick={() => onNavigate?.('shop')} className="flex items-center gap-2 sm:gap-3 bg-[var(--ink)] text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest hover:bg-[var(--terracotta)] transition-colors">
+          
+          {/* 3. Changed onNavigate?.('shop') to onNavigate('shop') */}
+          <button 
+            onClick={() => onNavigate('shop')} 
+            className="flex items-center gap-2 sm:gap-3 bg-[var(--ink)] text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest hover:bg-[var(--terracotta)] transition-colors"
+          >
             Explore Hardware <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
         </motion.div>
@@ -74,7 +83,7 @@ export const AboutPage: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }} 
                 whileInView={{ opacity: 1, y: 0 }} 
                 viewport={{ once: true }} 
-                transition={{ delay: idx * 0.2, duration: 0.8, ease: "easeOut" }} // Slower grid entrance
+                transition={{ delay: idx * 0.2, duration: 0.8, ease: "easeOut" }} 
                 className="bg-white/5 border border-white/10 p-6 sm:p-8 rounded-2xl hover:bg-white/10 transition-colors"
               >
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[var(--copper)]/20 text-[var(--copper)] flex items-center justify-center mb-4 sm:mb-6">

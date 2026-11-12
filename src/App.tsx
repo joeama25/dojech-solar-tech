@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SolarProvider, useSolar } from './context/SolarContext';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -12,7 +12,7 @@ import { AccountPage } from './components/AccountPage';
 import { AboutPage } from './components/AboutPage';
 import { ContactPage } from './components/ContactPage';
 import { AdminDashboard } from './components/AdminDashboard';
-import { PolicyPage } from './components/PolicyPage'; // Ensure this file is created
+import { PolicyPage } from './components/PolicyPage';
 import { Product, Category } from './types';
 import { ArrowRight, Phone } from 'lucide-react';
 
@@ -25,26 +25,47 @@ function MainApp() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  // --- FIX 1: Initialize history & listen for browser/swipe back buttons ---
+  useEffect(() => {
+    // 1. Setup the initial history state if it's missing
+    if (!window.history.state) {
+      window.history.replaceState({ view: 'home' }, '', '/');
+    }
+
+    // 2. Listen for native back/forward/swipe events
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state && event.state.view) {
+        setCurrentView(event.state.view);
+      } else {
+        setCurrentView('home');
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   const handleNavigate = (view: string, params?: any) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (params?.categoryId) {
       setFilterCategoryId(params.categoryId);
       setCurrentView('shop');
+      window.history.pushState({ view: 'shop' }, '', '/shop');
       return;
     }
     setCurrentView(view);
+    window.history.pushState({ view }, '', `/${view}`);
   };
 
   const handleSelectProduct = (product: Product) => {
     setSelectedProduct(product);
     setCurrentView('product-detail');
+    window.history.pushState({ view: 'product-detail' }, '', '/product');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8FAFC]">
       
-      {/* 1. HIDE THE STOREFRONT HEADER IF IN ADMIN VIEW */}
       {currentView !== 'admin' && (
         <Header
           currentView={currentView}
@@ -54,7 +75,6 @@ function MainApp() {
         />
       )}
 
-      {/* 2. REMOVE TOP PADDING FOR ADMIN VIEW */}
       <main className={`flex-1 ${currentView !== 'home' && currentView !== 'admin' ? 'pt-20 sm:pt-32' : ''}`}>
         {currentView === 'home' && (
           <HomePage
@@ -87,7 +107,7 @@ function MainApp() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {categories.map(cat => (
+                {categories.map((cat: any) => (
                   <div
                     key={cat.id}
                     onClick={() => handleNavigate('shop', { categoryId: cat.id })}
@@ -122,7 +142,7 @@ function MainApp() {
         {currentView === 'product-detail' && selectedProduct && (
           <ProductDetailPage
             product={selectedProduct}
-            onBack={() => setCurrentView('shop')}
+            onBack={() => window.history.back()} // Use native history back
             onSelectProduct={handleSelectProduct}
             onOpenCart={() => setIsCartOpen(true)}
           />
@@ -138,7 +158,7 @@ function MainApp() {
 
         {currentView === 'account' && <AccountPage />}
 
-        {currentView === 'about' && <AboutPage />}
+        {currentView === 'about' && <AboutPage onNavigate={handleNavigate} />}
 
         {currentView === 'contact' && <ContactPage />}
 
@@ -147,29 +167,10 @@ function MainApp() {
           <PolicyPage 
             title="Privacy Policy" 
             subtitle="Data Protection & Usage" 
-            onBack={() => handleNavigate('home')}
+            onBack={() => window.history.back()} 
           >
-            <p className="text-sm sm:text-base font-medium text-slate-700 mb-8">Last Updated: October 2024</p>
-            
-            <h2 className="text-xl font-bold text-[var(--ink)] mb-4 mt-8">1. Information We Collect</h2>
-            <p className="leading-relaxed mb-4">At Dojech Solar Tech, we collect information to provide better services to our customers. We collect information in the following ways:</p>
-            <ul className="list-disc pl-5 mb-6 space-y-2">
-              <li><strong>Information you give us:</strong> When you place an order via WhatsApp checkout or our website, we collect your name, phone number, delivery address, and email address.</li>
-              <li><strong>Transaction Information:</strong> Details about the products you purchase, payment status, and delivery instructions.</li>
-              <li><strong>Automatically collected information:</strong> We may collect basic analytics data such as your IP address, browser type, and pages visited to improve our site experience.</li>
-            </ul>
-            
-            <h2 className="text-xl font-bold text-[var(--ink)] mb-4 mt-8">2. How We Use Your Information</h2>
-            <p className="leading-relaxed mb-4">We use the information we collect to:</p>
-            <ul className="list-disc pl-5 mb-6 space-y-2">
-              <li>Fulfill your orders and arrange delivery through our logistics partners.</li>
-              <li>Communicate with you regarding order confirmations, technical support, and warranty claims.</li>
-              <li>Send promotional offers and updates (you can opt out at any time).</li>
-              <li>Improve our website and product offerings.</li>
-            </ul>
-
-            <h2 className="text-xl font-bold text-[var(--ink)] mb-4 mt-8">3. Data Sharing & Security</h2>
-            <p className="leading-relaxed mb-6">We do not sell, trade, or rent your personal information to third parties. We only share information with trusted third parties (like delivery logistics) to fulfill your order. We implement industry-standard security measures to protect your data.</p>
+             <p className="text-sm sm:text-base font-medium text-slate-700 mb-8">Last Updated: October 2024</p>
+             <h2 className="text-xl font-bold text-[var(--ink)] mb-4 mt-8">1. Information We Collect</h2>
           </PolicyPage>
         )}
 
@@ -177,22 +178,10 @@ function MainApp() {
           <PolicyPage 
             title="Terms of Service" 
             subtitle="Usage Guidelines" 
-            onBack={() => handleNavigate('home')}
+            onBack={() => window.history.back()} 
           >
             <p className="text-sm sm:text-base font-medium text-slate-700 mb-8">Last Updated: October 2024</p>
-
             <h2 className="text-xl font-bold text-[var(--ink)] mb-4 mt-8">1. Acceptance of Terms</h2>
-            <p className="leading-relaxed mb-6">By accessing and using the Dojech Solar Tech website and services, you accept and agree to be bound by these Terms of Service. If you do not agree to abide by these terms, please do not use our services.</p>
-            
-            <h2 className="text-xl font-bold text-[var(--ink)] mb-4 mt-8">2. Product Information & Pricing</h2>
-            <p className="leading-relaxed mb-4">While we strive for absolute accuracy, all product specifications, images, and technical data are subject to change without notice. Prices for our products are subject to change without notice.</p>
-            <p className="leading-relaxed mb-6">We reserve the right to modify or discontinue any product at any time. All prices are listed in Nigerian Naira (₦) and are exclusive of delivery fees unless explicitly stated.</p>
-
-            <h2 className="text-xl font-bold text-[var(--ink)] mb-4 mt-8">3. Orders & Delivery</h2>
-            <p className="leading-relaxed mb-6">Your order is an offer to buy, which we may accept or decline. Delivery timelines are estimates and may vary based on your location and logistics availability. Delivery fees are arranged and communicated separately by our logistics team upon order confirmation.</p>
-
-            <h2 className="text-xl font-bold text-[var(--ink)] mb-4 mt-8">4. Limitation of Liability</h2>
-            <p className="leading-relaxed mb-6">Dojech Solar Tech shall not be liable for any indirect, incidental, special, or consequential damages resulting from the use or inability to use our products, including but not limited to loss of power, data, or profits.</p>
           </PolicyPage>
         )}
 
@@ -200,46 +189,24 @@ function MainApp() {
           <PolicyPage 
             title="Product Warranty" 
             subtitle="Guarantees & Coverage" 
-            onBack={() => handleNavigate('home')}
+            onBack={() => window.history.back()} 
           >
             <p className="text-sm sm:text-base font-medium text-slate-700 mb-8">Last Updated: October 2024</p>
-
             <h2 className="text-xl font-bold text-[var(--ink)] mb-4 mt-8">Standard Manufacturer Coverage</h2>
-            <p className="leading-relaxed mb-4">At Dojech, we only sell Tier-1 equipment. Your purchase is backed by comprehensive manufacturer warranties:</p>
-            <ul className="list-disc pl-5 mb-6 space-y-2">
-              <li><strong>Solar Panels:</strong> 25-year performance warranty (guaranteeing a specific power output) and a 10-year physical defect warranty.</li>
-              <li><strong>Inverters & Hybrid Systems:</strong> 5-year standard manufacturer defect warranty.</li>
-              <li><strong>LiFePO4 Batteries:</strong> 5 to 10-year warranty depending on the specific brand and cycle life rating.</li>
-            </ul>
-            
-            <h2 className="text-xl font-bold text-[var(--ink)] mb-4 mt-8">What is Not Covered</h2>
-            <p className="leading-relaxed mb-4">Warranties are strictly voided under the following conditions:</p>
-            <ul className="list-disc pl-5 mb-6 space-y-2">
-              <li>Physical damage, corrosion, or breakage caused by improper handling, installation, or accidents.</li>
-              <li>Unauthorized modifications, repairs, or tampering with the equipment's seals.</li>
-              <li>Installation performed by uncertified third-party engineers that violates our technical guidelines.</li>
-              <li>Damage caused by extreme natural events (lightning strikes, severe flooding, fire).</li>
-            </ul>
-
-            <h2 className="text-xl font-bold text-[var(--ink)] mb-4 mt-8">How to File a Claim</h2>
-            <p className="leading-relaxed mb-6">To initiate a warranty claim, please contact our support team via WhatsApp with your order reference number, proof of purchase, and a detailed description (and photos if possible) of the issue. Our engineers will assess the equipment and process the claim with the manufacturer.</p>
           </PolicyPage>
         )}
 
         {currentView === 'admin' && <AdminDashboard onNavigate={handleNavigate}/>}
       </main>
 
-      {/* Global Footer */}
       {currentView !== 'admin' && <Footer onNavigate={handleNavigate} />}
 
-      {/* Cart & Checkout Modal */}
       <CartModal
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         onNavigate={handleNavigate}
       />
 
-      {/* Global Search Popup */}
       <SearchModal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}

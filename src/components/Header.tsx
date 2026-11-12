@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Search, Heart, ShoppingBag, User, Menu, X, Phone, ShieldCheck, ArrowRight, ChevronDown } from 'lucide-react';
+import { Sun, Search, Heart, ShoppingBag, User, Menu, X, Phone, ShieldCheck, ArrowRight, ChevronDown, ArrowLeft } from 'lucide-react';
 import { useSolar } from '../context/SolarContext';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -11,7 +11,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onOpenCart, onOpenSearch }) => {
-  const { cartTotalCount, wishlist, currentUser, isAdmin, signOut, signInWithGoogle, settings } = useSolar();
+  const { cartTotalCount, wishlist, currentUser, isAdmin, signOut, signInWithGoogle, settings } = useSolar() as any;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,6 +24,14 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onOpenC
 
   const isSolid = isScrolled || currentView !== 'home';
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      onNavigate('home');
+    }
+  };
+
   return (
     <>
       <header
@@ -35,13 +43,30 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onOpenC
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between gap-4">
           
-          {/* Logo */}
-          <button onClick={() => { onNavigate('home'); setMobileMenuOpen(false); }} className="flex items-center gap-2 group focus:outline-none z-50">
-            <Sun className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 transition-colors duration-500 ${isSolid ? 'text-[var(--ink)]' : 'text-white'}`} strokeWidth={1.5} />
-            <span className={`text-xl sm:text-2xl lg:text-[28px] font-medium tracking-tight transition-colors duration-500 ${isSolid ? 'text-[var(--ink)]' : 'text-white'}`}>
-              dojech
-            </span>
-          </button>
+          {/* Left Side: Logo (Home) OR Back Button (Other Pages) */}
+          <div className="flex items-center shrink-0 z-50">
+            
+            {currentView !== 'home' ? (
+              <button 
+                onClick={handleBack}
+                className={`group p-2 -ml-2 rounded-full transition-colors ${
+                  isSolid 
+                    ? 'text-[var(--sage)] hover:text-[var(--ink)] hover:bg-[var(--paper)]' 
+                    : 'text-white/80 hover:text-white hover:bg-white/10'
+                }`}
+                aria-label="Go back"
+              >
+                <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:-translate-x-1" strokeWidth={2} />
+              </button>
+            ) : (
+              <button onClick={() => { onNavigate('home'); setMobileMenuOpen(false); }} className="flex items-center gap-2 group focus:outline-none">
+                <Sun className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 transition-colors duration-500 ${isSolid ? 'text-[var(--ink)]' : 'text-white'}`} strokeWidth={1.5} />
+                <span className={`text-xl sm:text-2xl lg:text-[28px] font-medium tracking-tight transition-colors duration-500 ${isSolid ? 'text-[var(--ink)]' : 'text-white'}`}>
+                  dojech
+                </span>
+              </button>
+            )}
+          </div>
 
           {/* Centered Desktop Nav */}
           <nav className={`hidden lg:flex items-center gap-10 text-sm font-medium transition-colors duration-500 ${isSolid ? 'text-[var(--sage)]' : 'text-white/80'}`}>
@@ -53,15 +78,29 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onOpenC
                 </button>
               </div>
             ) : (
-              ['Home', 'Shop', 'Categories', 'About', 'Contact'].map((view) => (
-                <button
-                  key={view}
-                  onClick={() => onNavigate(view.toLowerCase())}
-                  className={`hover:${isSolid ? 'text-[var(--ink)]' : 'text-white'} transition-colors relative`}
-                >
-                  {view}
-                </button>
-              ))
+              ['Home', 'Shop', 'Categories', 'About', 'Contact'].map((view) => {
+                const isActive = currentView === view.toLowerCase();
+                return (
+                  <button
+                    key={view}
+                    onClick={() => onNavigate(view.toLowerCase())}
+                    className={`relative transition-colors group ${
+                      isActive 
+                        ? (isSolid ? 'text-[var(--ink)] font-bold' : 'text-white font-bold') 
+                        : (isSolid ? 'hover:text-[var(--ink)]' : 'hover:text-white')
+                    }`}
+                  >
+                    {view}
+                    {/* Active link indicator */}
+                    {isActive && (
+                      <motion.div 
+                        layoutId="nav-indicator"
+                        className={`absolute -bottom-1.5 left-0 right-0 h-[2px] ${isSolid ? 'bg-[var(--ink)]' : 'bg-white'}`}
+                      />
+                    )}
+                  </button>
+                );
+              })
             )}
           </nav>
 
@@ -87,7 +126,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onOpenC
               )}
             </button>
 
-            {/* PROMINENT LOGIN / ACCOUNT BUTTON (Always visible on Desktop) */}
+            {/* PROMINENT LOGIN / ACCOUNT BUTTON */}
             <div className="relative hidden sm:block ml-2">
               <button 
                 onClick={() => currentUser ? setUserDropdownOpen(!userDropdownOpen) : signInWithGoogle()} 
