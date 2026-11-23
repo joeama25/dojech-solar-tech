@@ -61,6 +61,13 @@ interface SolarContextType {
 
 const SolarContext = createContext<SolarContextType | undefined>(undefined);
 
+// --- CRITICAL FIX: Helper to remove undefined values so Firestore NEVER crashes ---
+const cleanUndefined = (obj: any) => {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([_, value]) => value !== undefined)
+  );
+};
+
 export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Start with initial data so the site NEVER looks broken to guests
   const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
@@ -115,7 +122,6 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           if (!isAdmin) {
             console.log('Database empty. Waiting for admin to log in to seed data.');
             setLoading(false);
-            // Still attach listeners so the page updates if someone else seeds it
           } else {
             console.log('Database empty and Admin logged in. Seeding initial data to Firestore...');
             const batch = writeBatch(db);
@@ -178,7 +184,7 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (unsubSettings) unsubSettings();
       if (unsubOrders) unsubOrders();
     };
-  }, [isAdmin]); // Re-runs when admin status changes
+  }, [isAdmin]);
 
   const addToCart = (product: Product, quantity = 1) => {
     setCart(prev => {
@@ -201,10 +207,10 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
   const isInWishlist = (productId: string) => wishlist.includes(productId);
 
-   const createWhatsAppOrder = async (customer: CustomerDetails) => {
+  const createWhatsAppOrder = async (customer: CustomerDetails) => {
     const reference = `DOJ-${Date.now().toString().slice(-6)}`;
     const subtotal = cartSubtotal;
-    const total = subtotal; // Total is now just the subtotal
+    const total = subtotal;
 
     const orderData: Order = {
       id: `ord_${Date.now()}`,
@@ -229,7 +235,7 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     try {
-      await setDoc(doc(db, 'orders', orderData.id), orderData);
+      await setDoc(doc(db, 'orders', orderData.id), cleanUndefined(orderData));
       setOrders(prev => [orderData, ...prev]);
     } catch (error) {
       console.warn("Could not save order to Firestore, saving locally.", error);
@@ -241,7 +247,6 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const itemsList = orderData.items.map((item, idx) => `${idx + 1}. ${item.productName} x ${item.quantity} = ₦${item.subtotal.toLocaleString()}`).join('\n');
     
-    // UPDATED MESSAGE
     const message = `Hello Dojech Solar Tech!\n\nI would like to place an order.\n\nORDER REF: ${reference}\n\nCUSTOMER DETAILS\nName: ${customer.fullName}\nPhone: ${customer.phone}\nDelivery Address: ${customer.address}, ${customer.city}, ${customer.state}\n${customer.notes ? `Additional Instructions: ${customer.notes}\n` : ''}\nORDER DETAILS\n${itemsList}\n\nSubtotal: ₦${subtotal.toLocaleString()}\n\n*Note: Delivery fee is NOT included. Please advise on delivery logistics and cost.*\n\nTotal (Excl. Delivery): ₦${total.toLocaleString()}\n\nPlease confirm product availability and provide payment instructions.\n\nThank you!`;
 
     const encodedMessage = encodeURIComponent(message);
@@ -278,7 +283,7 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       createdAt: new Date().toISOString()
     };
 
-    await setDoc(doc(db, 'orders', orderData.id), orderData);
+    await setDoc(doc(db, 'orders', orderData.id), cleanUndefined(orderData));
     setOrders(prev => [orderData, ...prev]); 
   };
 
@@ -315,7 +320,8 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (idx >= 0) { const next = [...prev]; next[idx] = fullProduct; return next; }
       return [fullProduct, ...prev];
     });
-    await setDoc(doc(db, 'products', id), fullProduct);
+    // Using cleanUndefined to prevent Firestore crashes
+    await setDoc(doc(db, 'products', id), cleanUndefined(fullProduct));
   };
 
   const deleteProduct = async (productId: string) => {
@@ -335,7 +341,7 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (idx >= 0) { const next = [...prev]; next[idx] = fullCat; return next; }
       return [...prev, fullCat];
     });
-    await setDoc(doc(db, 'categories', id), fullCat);
+    await setDoc(doc(db, 'categories', id), cleanUndefined(fullCat));
   };
 
   const deleteCategory = async (categoryId: string) => {
@@ -356,7 +362,7 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (idx >= 0) { const next = [...prev]; next[idx] = fullSlide; return next; }
       return [...prev, fullSlide];
     });
-    await setDoc(doc(db, 'hero_slides', id), fullSlide);
+    await setDoc(doc(db, 'hero_slides', id), cleanUndefined(fullSlide));
   };
 
   const deleteHeroSlide = async (slideId: string) => {
@@ -366,12 +372,12 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const updateOrderStatus = async (orderId: string, status: Order['status'], paymentVerified: boolean, notes?: string) => {
     setOrders(prev => prev.map(ord => ord.id === orderId ? { ...ord, status, paymentVerified, internalNotes: notes !== undefined ? notes : ord.internalNotes } : ord));
-    await updateDoc(doc(db, 'orders', orderId), { status, paymentVerified, ...(notes !== undefined ? { internalNotes: notes } : {}) });
+    await updateDoc(doc(db, 'orders', orderId), cleanUndefined({ status, paymentVerified, ...(notes !== undefined ? { internalNotes: notes } : {}) }));
   };
 
   const saveSettings = async (newSettings: WebsiteSettings) => {
     setSettings(newSettings);
-    await setDoc(doc(db, 'settings', 'general'), newSettings);
+    await setDoc(doc(db, 'settings', 'general'), cleanUndefined(newSettings));
   };
 
   const saveTestimonial = async (testData: Partial<Testimonial>) => {
@@ -386,7 +392,7 @@ export const SolarProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (idx >= 0) { const next = [...prev]; next[idx] = fullTest; return next; }
       return [...prev, fullTest];
     });
-    await setDoc(doc(db, 'testimonials', id), fullTest);
+    await setDoc(doc(db, 'testimonials', id), cleanUndefined(fullTest));
   };
 
   const deleteTestimonial = async (id: string) => {
